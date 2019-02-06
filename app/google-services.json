@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "36597016884",
+    "firebase_url": "https://oatkucompanion.firebaseio.com",
+    "project_id": "oatkucompanion",
+    "storage_bucket": "oatkucompanion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36597016884:android:0135043e7cb89bd6",
+        "android_client_info": {
+          "package_name": "com.example.abdulsalam.oatkucompanion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36597016884-t62c98fumuv89g5qlvch995kt4ockjhm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.abdulsalam.oatkucompanion",
+            "certificate_hash": "1fad15a9e4ca43cb8820acd0a960888898edbf32"
+          }
+        },
+        {
+          "client_id": "36597016884-p008b5ojj61jofn9db8gg8l7iib39rrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2eL6tD-wyARWBghY9hAD_14Rxfica7RU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36597016884-p008b5ojj61jofn9db8gg8l7iib39rrb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

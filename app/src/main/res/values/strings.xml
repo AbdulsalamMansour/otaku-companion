@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">OtakuCompanion</string>
+    <string name="title_activity_main_display">MainDisplayActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!--Keys for genres -->
+    <string name="ACTION">1</string>
+    <string name="ADVENTURE">2</string>
+    <string name="CARS">3</string>
+    <string name="COMEDY">4</string>
+    <string name="DEMENTIA">5</string>
+    <string name="DEMONS">6</string>
+    <string name="MYSTERY">7</string>
+    <string name="DRAMA">8</string>
+    <string name="ECCHI">9</string>
+    <string name="FANTASY">10</string>
+    <string name="GAME">11</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="create_account">Create new account</string>
+    <string name="login2">Login to your account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="signup">Signup</string>
+
+
+    <string name="no_connection">No Internet !!</string>
+    <string name="length_error">Minimum lenght of password should be 6</string>
+    <string name="pass_req">Password is required</string>
+    <string name="email_req">Please enter a valid email</string>
+    <string name="no_match">Passwords don`t match</string>
+    <string name="confirmation">Confirm password is required</string>
+    <string name="registered">You are already registered</string>
+    <string name="input_email">Email is required</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="todo">TODO</string>
+    <string name="airing_start">airing_start:</string>
+    <string name="score">Score:</string>
+    <string name="synopsis">Synopsis:</string>
+    <string name="original_title">Title:</string>
+    <string name="top">TOP</string>
+    <string name="by_genre">By Genre</string>
+    <string name="favorites">Favorites</string>
+    <string name="communicate">Communicate</string>
+    <string name="logout">Logout</string>
+    <string name="share">Share</string>
+    <string name="anime_detailed">anime_detailed</string>
+    <string name="fav">favorites</string>
+    <string name="anime_key">anime</string>
+    <string name="check_connection">Check Your internet connection</string>
+    <string name="position">position</string>
+    <string name="search_key">search_keyword</string>
+    <string name="email_required">Email is required</string>
+    <string name="search">search</string>
+
+
+</resources>

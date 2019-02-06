@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string-array name="genres">
+        <item>ACTION</item>
+        <item>ADVENTURE</item>
+        <item>CARS</item>
+        <item>COMEDY</item>
+        <item>DEMENTIA</item>
+        <item>DEMONS</item>
+        <item>MYSTERY</item>
+        <item>DRAMA</item>
+        <item>ECCHI</item>
+        <item>FANTASY</item>
+        <item>GAME</item>
+    </string-array>
+
+
+</resources>
