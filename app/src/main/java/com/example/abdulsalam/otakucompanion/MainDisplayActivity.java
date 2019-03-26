@@ -2,6 +2,7 @@ package com.example.abdulsalam.otakucompanion;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -18,14 +19,15 @@ import com.example.abdulsalam.otakucompanion.Fragments.MainDisplayFragment;
 import com.example.abdulsalam.otakucompanion.Fragments.ViewByGenreFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainDisplayActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
 
-
-
+    Matcher matcher ;
+    Pattern pattern;
     NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class MainDisplayActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+         pattern = Pattern.compile(".*[a-zA-Z]+.*");
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -52,9 +56,6 @@ public class MainDisplayActivity extends AppCompatActivity
                     new MainDisplayFragment()).commit();
             navigationView.setCheckedItem(R.id.top_anime);
 
-
-
-
     }
 
 
@@ -65,7 +66,7 @@ public class MainDisplayActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            FragmentManager fragmentManager = Objects.requireNonNull(this).getSupportFragmentManager();
+            FragmentManager fragmentManager = this.getSupportFragmentManager();
             fragmentManager.popBackStack();
         }
     }
@@ -82,12 +83,12 @@ public class MainDisplayActivity extends AppCompatActivity
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-
-
+                matcher = pattern.matcher(s);
                 if(s.length() < 3){
                     Toast.makeText(MainDisplayActivity.this, "Search word must be longer than 3 letters", Toast.LENGTH_SHORT).show();
-                }else {
-
+                }else if (!(matcher.matches())) {
+                    Toast.makeText(MainDisplayActivity.this, "String Must Contain at Least One Letter", Toast.LENGTH_SHORT).show();
+                }else{
                     MainDisplayFragment mainDisplayFragment = new MainDisplayFragment();
 
                     Bundle bundle = new Bundle();
@@ -136,7 +137,7 @@ public class MainDisplayActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
