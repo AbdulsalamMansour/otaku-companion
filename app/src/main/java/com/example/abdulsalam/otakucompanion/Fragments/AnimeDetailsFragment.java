@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -67,6 +69,8 @@ public class AnimeDetailsFragment extends Fragment {
     private String userID;
     private Unbinder mUnbinder = null ;
 
+    private Handler mHandler;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,6 +88,7 @@ public class AnimeDetailsFragment extends Fragment {
 
 
 
+        mHandler = new Handler(Looper.getMainLooper());
         progressBar.setVisibility(View.VISIBLE);
         progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
 
@@ -172,19 +177,26 @@ public class AnimeDetailsFragment extends Fragment {
 
                     animeDetailed = response.body();
                     //set the poster
-                    Picasso.with(getActivity()).load(animeDetailed.getImageUrl()).into(imgPoster);
-                    //set the title
-                    txtTitle.setText(animeDetailed.getTitle());
-                    //set the synopsis
-                    txtSynopsis.setText(animeDetailed.getSynopsis());
-                    //set the score
-                    txtScore.setText(animeDetailed.getScore().toString());
-                    //set airing date
-                    txtAiringStart.setText(animeDetailed.getAired().getFrom());
 
-                    progressBar.setVisibility(View.GONE);
-                    linearLayout.setVisibility(View.VISIBLE);
-                    OtakuWidgetService.startActionUpdateWidgets(getActivity(), animeDetailed.getSynopsis(), animeDetailed);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Picasso.with(getActivity()).load(animeDetailed.getImageUrl()).into(imgPoster);
+                            //set the title
+                            txtTitle.setText(animeDetailed.getTitle());
+                            //set the synopsis
+                            txtSynopsis.setText(animeDetailed.getSynopsis());
+                            //set the score
+                            txtScore.setText(animeDetailed.getScore().toString());
+                            //set airing date
+                            txtAiringStart.setText(animeDetailed.getAired().getFrom());
+
+                            progressBar.setVisibility(View.GONE);
+                            linearLayout.setVisibility(View.VISIBLE);
+                            OtakuWidgetService.startActionUpdateWidgets(getActivity(), animeDetailed.getSynopsis(), animeDetailed);
+                        }
+                    });
+
 
 
                 }

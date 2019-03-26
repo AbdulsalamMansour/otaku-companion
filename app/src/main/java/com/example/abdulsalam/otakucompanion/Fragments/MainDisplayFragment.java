@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -58,7 +60,7 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
     AnimeAdapter animeAdapter;
     private List<AnimeDetailed> favorites = new ArrayList<>();
     private Unbinder mUnbinder = null ;
-
+    private Handler mHandler;
     //initialize retrofit
 
     Retrofit.Builder builder = new Retrofit.Builder()
@@ -83,8 +85,7 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
         View rootView = inflater.inflate(R.layout.fragment_main_display, container, false);
         mUnbinder = ButterKnife.bind(this,rootView);
 
-
-
+        mHandler = new Handler(Looper.getMainLooper());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -170,15 +171,21 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
                 @Override
                 public void onResponse(@NonNull Call<ResponseForTop> call, @NonNull Response<ResponseForTop> response) {
 
-                    ResponseForTop responseForTop = response.body();
+                    final ResponseForTop responseForTop = response.body();
 
                     assert responseForTop != null;
 
-                    if(progressBar != null) {
-                        progressBar.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
-                    }
-                    animeAdapter.setData(responseForTop.getAnime());
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(progressBar != null) {
+                                progressBar.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                            }
+                            animeAdapter.setData(responseForTop.getAnime());
+                        }
+                    });
+
                 }
 
                 @Override
@@ -200,13 +207,20 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
         call.enqueue(new Callback<ResponseByGenre>() {
             @Override
             public void onResponse(@NonNull Call<ResponseByGenre> call, @NonNull Response<ResponseByGenre> response) {
-                ResponseByGenre responseByGenre = response.body();
+                final ResponseByGenre responseByGenre = response.body();
                 assert responseByGenre != null;
-                if(progressBar != null) {
-                    progressBar.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
-                animeAdapter.setData(responseByGenre.getAnime());
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                        animeAdapter.setData(responseByGenre.getAnime());
+                    }
+                });
+
             }
 
             @Override
@@ -233,7 +247,7 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
             @Override
             public void onResponse(@NonNull Call<ResponseForAnimeSearch> call, @NonNull Response<ResponseForAnimeSearch> response) {
 
-                ArrayList<Anime> animes = new ArrayList<>();
+                final ArrayList<Anime> animes = new ArrayList<>();
                 Anime tmpAnime;
                 Result tmpResult;
                 if(response.body() != null){
@@ -250,10 +264,18 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
 
 
                 }
-                animeAdapter.setData(animes);
-                if(progressBar != null)
-                progressBar.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        animeAdapter.setData(animes);
+                        if(progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
 
             }
 
@@ -278,7 +300,7 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
         readData(new MyCallback() {
             @Override
             public void onCallback(List<AnimeDetailed> list) {
-                ArrayList<Anime> animes = new ArrayList<>();
+                final ArrayList<Anime> animes = new ArrayList<>();
                 Anime tmpAnime;
                 AnimeDetailed tmpAnimeDetailed;
 
@@ -292,11 +314,18 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
 
 
                 }
-                if(progressBar != null) {
-                    progressBar.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
-                animeAdapter.setData(animes);
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                        animeAdapter.setData(animes);
+                    }
+                });
+
 
             }
         });
