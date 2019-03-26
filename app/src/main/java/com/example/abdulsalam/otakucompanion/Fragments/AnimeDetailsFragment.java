@@ -212,6 +212,7 @@ public class AnimeDetailsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     for (DataSnapshot favSnapshot : ds.child(userID).getChildren()) {
+                        if(anime != null)
                         if(favSnapshot.getKey() != null && favSnapshot.getKey().equals(anime.getMalId().toString())) {
                             flag = 1;
                             mFavImg.setImageResource(R.drawable.added);

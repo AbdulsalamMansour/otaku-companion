@@ -97,10 +97,11 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
         if(bundle != null && bundle.containsKey(getString(R.string.position)) ) {
             int genre = bundle.getInt(getString(R.string.position));
             genre++;
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
 
-
+            if(progressBar != null) {
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
+            }
             getAnimeByGenre(Integer.toString(genre));
 
         }else if (bundle != null && bundle.containsKey(getString(R.string.search_key)) ){
@@ -109,16 +110,19 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
 
         }else if (bundle != null && bundle.containsKey(getString(R.string.fav)) ){
 
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
-
+            if(progressBar != null) {
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
+            }
             getFavoriteAnimes();
 
 
 
         }else{
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
+            if(progressBar != null) {
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
+            }
             getTopAnimes();
         }
 
@@ -170,10 +174,11 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
 
                     assert responseForTop != null;
 
-                    progressBar.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
+                    if(progressBar != null) {
+                        progressBar.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
                     animeAdapter.setData(responseForTop.getAnime());
-
                 }
 
                 @Override
@@ -197,9 +202,10 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
             public void onResponse(@NonNull Call<ResponseByGenre> call, @NonNull Response<ResponseByGenre> response) {
                 ResponseByGenre responseByGenre = response.body();
                 assert responseByGenre != null;
-                progressBar.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-
+                if(progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
                 animeAdapter.setData(responseByGenre.getAnime());
             }
 
@@ -215,16 +221,12 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
 
 
     private void searchForAnimeByName(String animeName){
-
-
         if(checkConnection(Objects.requireNonNull(getActivity()))) {
-
-
-
         Retrofit retrofit = builder.build();
         AnimeClient client = retrofit.create(AnimeClient.class);
+        if(progressBar != null)
         progressBar.setVisibility(View.VISIBLE);
-        progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
+        Objects.requireNonNull(progressBar).getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
 
         Call<ResponseForAnimeSearch> animeSearch = client.searchAnimeByName(animeName);
         animeSearch.enqueue(new Callback<ResponseForAnimeSearch>() {
@@ -249,6 +251,7 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
 
                 }
                 animeAdapter.setData(animes);
+                if(progressBar != null)
                 progressBar.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
 
@@ -289,10 +292,10 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
 
 
                 }
-                progressBar.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-
-
+                if(progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
                 animeAdapter.setData(animes);
 
             }
