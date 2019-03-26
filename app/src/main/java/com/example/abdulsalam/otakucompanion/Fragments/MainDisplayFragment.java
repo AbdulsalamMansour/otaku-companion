@@ -98,7 +98,7 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
             int genre = bundle.getInt(getString(R.string.position));
             genre++;
             progressBar.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
+            progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
 
 
             getAnimeByGenre(Integer.toString(genre));
@@ -110,14 +110,12 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
         }else if (bundle != null && bundle.containsKey(getString(R.string.fav)) ){
 
             progressBar.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
             getFavoriteAnimes();
 
 
 
         }else{
             progressBar.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
             getTopAnimes();
         }
 

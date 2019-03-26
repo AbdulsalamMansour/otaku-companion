@@ -3,10 +3,12 @@ package com.example.abdulsalam.otakucompanion;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Patterns;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,6 +35,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
+
+//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+
+        Window window = this.getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorPrimary));
 
         editTextEmail = findViewById(R.id.input_email);
         editTextPassword = findViewById(R.id.input_password);

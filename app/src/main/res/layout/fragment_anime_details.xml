@@ -3,24 +3,27 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@android:color/holo_blue_light"
     android:layout_height="match_parent">
 
 
+<FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <LinearLayout
+        android:id="@+id/layout_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:focusableInTouchMode="true"
+        android:visibility="invisible">
 
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone" />
-
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/img_poster"
             android:layout_width="match_parent"
@@ -31,22 +34,35 @@
             android:scaleType="fitXY"
             />
 
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom|end"
+                android:padding="6dp"
+                android:id="@+id/fav_btn"
+                android:src="@drawable/removed"
+                android:contentDescription="@string/todo" />
+
+        </FrameLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_background">
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="6dp"
             android:text="@string/original_title"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="22sp"/>
 
         <TextView
@@ -55,23 +71,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
+            android:textColor="@android:color/black"
             android:textSize="18sp" />
+
     </LinearLayout>
-        <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
-            android:padding="6dp"
-            android:id="@+id/fav_btn"
-            android:src="@drawable/removed"
-            android:contentDescription="@string/todo" />
-    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_background">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="6dp"
             android:text="@string/synopsis"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="22sp"
             />
 
@@ -81,7 +99,17 @@
             android:layout_height="wrap_content"
             android:padding="6dp"
             android:paddingBottom="16dp"
+            android:textColor="@android:color/black"
             android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_background">
 
         <TextView
             android:layout_width="match_parent"
@@ -89,6 +117,7 @@
             android:text="@string/score"
             android:padding="6dp"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="22sp"
             />
 
@@ -99,12 +128,22 @@
             android:padding="6dp"
             android:paddingBottom="16dp"
             android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_background">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/airing_start"
             android:padding="6dp"
+            android:textColor="@android:color/black"
             android:textStyle="bold"
             android:textSize="22sp"/>
 
@@ -113,13 +152,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
+            android:textColor="@android:color/black"
             android:padding="6dp"
             android:textSize="18sp"/>
+    </LinearLayout>
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             ads:adSize="BANNER"
@@ -128,4 +170,16 @@
 
     </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
+
+
+
+    </FrameLayout>
 </ScrollView>

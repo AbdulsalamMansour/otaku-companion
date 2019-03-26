@@ -26,7 +26,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="signup">Signup</string>
+    <string name="signup">No account yet? Create one</string>
 
 
     <string name="no_connection">No Internet !!</string>

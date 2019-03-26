@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,8 @@ public class AnimeDetailsFragment extends Fragment {
     TextView txtAiringStart;
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
+    @BindView(R.id.layout_details)
+    LinearLayout linearLayout;
 
     Anime anime;
     AnimeDetailed animeDetailed;
@@ -82,6 +85,7 @@ public class AnimeDetailsFragment extends Fragment {
 
 
         progressBar.setVisibility(View.VISIBLE);
+        progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
 
         if(savedInstanceState != null) {
             animeDetailed = savedInstanceState.getParcelable(getString(R.string.anime_detailed));
@@ -179,6 +183,7 @@ public class AnimeDetailsFragment extends Fragment {
                     txtAiringStart.setText(animeDetailed.getAired().getFrom());
 
                     progressBar.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
                     OtakuWidgetService.startActionUpdateWidgets(getActivity(), animeDetailed.getSynopsis(), animeDetailed);
 
 
