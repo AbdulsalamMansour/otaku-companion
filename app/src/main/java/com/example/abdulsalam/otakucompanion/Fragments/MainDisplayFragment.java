@@ -110,12 +110,15 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
         }else if (bundle != null && bundle.containsKey(getString(R.string.fav)) ){
 
             progressBar.setVisibility(View.VISIBLE);
+            progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
+
             getFavoriteAnimes();
 
 
 
         }else{
             progressBar.setVisibility(View.VISIBLE);
+            progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
             getTopAnimes();
         }
 
@@ -213,11 +216,15 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
 
     private void searchForAnimeByName(String animeName){
 
+
         if(checkConnection(Objects.requireNonNull(getActivity()))) {
+
 
 
         Retrofit retrofit = builder.build();
         AnimeClient client = retrofit.create(AnimeClient.class);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
 
         Call<ResponseForAnimeSearch> animeSearch = client.searchAnimeByName(animeName);
         animeSearch.enqueue(new Callback<ResponseForAnimeSearch>() {
@@ -241,10 +248,9 @@ public class MainDisplayFragment extends Fragment implements AnimeAdapter.OnClic
 
 
                 }
-
-
-
                 animeAdapter.setData(animes);
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
 
             }
 
