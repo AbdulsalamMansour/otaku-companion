@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
@@ -17,8 +18,14 @@ import android.widget.Toast;
 
 import com.example.abdulsalam.otakucompanion.Fragments.MainDisplayFragment;
 import com.example.abdulsalam.otakucompanion.Fragments.ViewByGenreFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
+import java.io.IOException;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +33,7 @@ public class MainDisplayActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    private static String LOG_TAG = MainDisplayActivity.class.getSimpleName();
     Matcher matcher ;
     Pattern pattern;
     NavigationView navigationView;
@@ -36,8 +44,35 @@ public class MainDisplayActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //FCM Handler
 
-         pattern = Pattern.compile(".*[a-zA-Z]+.*");
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(LOG_TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = Objects.requireNonNull(task.getResult()).getToken();
+
+                        // Log and toast
+
+                        Log.e(LOG_TAG, token);
+                        //Toast.makeText(MainDisplayActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+        //FCM Bundle Extra
+//        Bundle extras = getIntent().getExtras();
+//        if(extras != null && extras.containsKey("test"))
+//            Log.e(LOG_TAG, "onCreate: "+ "------------------------------ " + extras.getString("test") );
+
+
+        pattern = Pattern.compile(".*[a-zA-Z]+.*");
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -183,7 +218,19 @@ public class MainDisplayActivity extends AppCompatActivity
 
         } else if (id == R.id.logout) {
 
+
             FirebaseAuth.getInstance().signOut();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        FirebaseInstanceId.getInstance().deleteInstanceId();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         }
 
