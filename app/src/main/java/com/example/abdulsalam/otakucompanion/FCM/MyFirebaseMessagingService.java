@@ -2,11 +2,14 @@ package com.example.abdulsalam.otakucompanion.FCM;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import com.example.abdulsalam.otakucompanion.MainDisplayActivity;
 import com.example.abdulsalam.otakucompanion.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -46,12 +49,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         createNotificationChannel();
 
+        Intent intent = new Intent(this, MainDisplayActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        Log.d(TAG, "Notification Message Body: " + remoteMessage.getData().get("body"));
+        // String body = Objects.requireNonNull(remoteMessage.getNotification()).getBody();
+        //Log.d(TAG, body);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.app_icon)
-                .setContentTitle("Foreground")
-                .setContentText("Foreground notification Text")
-                .setStyle(new NotificationCompat.BigTextStyle().bigText("Much longer text that cannot fit one line..."))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setContentTitle(remoteMessage.getData().get("title"))
+                .setContentText(remoteMessage.getData().get("body"))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getData().get("body")))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
@@ -72,16 +85,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
 
         }
-
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
     }
-    // [END receive_message]
 
 
     // [START on_new_token]

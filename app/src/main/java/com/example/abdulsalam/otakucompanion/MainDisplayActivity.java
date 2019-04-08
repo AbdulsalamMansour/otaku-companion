@@ -61,7 +61,7 @@ public class MainDisplayActivity extends AppCompatActivity
                         // Log and toast
 
                         Log.e(LOG_TAG, token);
-                        //Toast.makeText(MainDisplayActivity.this, token, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainDisplayActivity.this, token, Toast.LENGTH_SHORT).show();
                     }
                 });
 
